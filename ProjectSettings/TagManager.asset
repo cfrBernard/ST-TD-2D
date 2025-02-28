@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Wall
+  - Pit
+  - Item
+  - Enemy
   layers:
   - Default
   - TransparentFX

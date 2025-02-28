@@ -16,3 +16,7 @@ MonoBehaviour:
   acceleration: 30
   deceleration: 20
   deadZone: 0.4
+  projectileDamage: 1
+  projectileSpeed: 5
+  fireRate: 2
+  projectileDistance: 2.5
