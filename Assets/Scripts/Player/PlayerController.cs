@@ -58,9 +58,4 @@ public class PlayerController : MonoBehaviour
         // Apply movement
         rb.MovePosition(rb.position + currentVelocity * Time.fixedDeltaTime);
     }
-
-
-
-
-
 }

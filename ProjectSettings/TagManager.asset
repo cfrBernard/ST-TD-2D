@@ -8,6 +8,8 @@ TagManager:
   - Pit
   - Item
   - Enemy
+  - Ground
+  - Background
   layers:
   - Default
   - TransparentFX
@@ -28,10 +30,10 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - Background
+  - Wall
+  - Ground
+  - Pit
   - 
   - 
   - 
@@ -44,6 +46,18 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: ProjectileParticles
+    uniqueID: 1454311011
+    locked: 0
+  - name: Background
+    uniqueID: 141759727
+    locked: 0
+  - name: Player
+    uniqueID: 4027300521
+    locked: 0
+  - name: FX
+    uniqueID: 917688283
     locked: 0
   m_RenderingLayers:
   - Default
