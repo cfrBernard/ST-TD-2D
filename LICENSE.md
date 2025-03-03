@@ -1,5 +1,7 @@
 # Proprietary License
 
+**Copyright (c) [2024] [C. Bernard]**
+
 This project is protected under a **proprietary license**, and is not allowed to be redistributed or commercially exploited without permission from the project owner.
 
 ## Terms of Use
