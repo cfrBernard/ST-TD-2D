@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class Projectile : MonoBehaviour // PlayerProjectile*
 {
     [SerializeField] private GameObject particlePrefab; 
 
@@ -9,7 +9,7 @@ public class Projectile : MonoBehaviour
     private float maxDistance;
     private float distanceTraveled;
 
-    public float damage = 1f;
+    public float damage = 1f; // playerConfig instead
 
     public void Initialize(Vector2 direction, PlayerConfig config)
     {
@@ -43,7 +43,6 @@ public class Projectile : MonoBehaviour
         if (damageable != null)
         {
             damageable.TakeDamage(damage, transform.position);
-            gameObject.SetActive(false);
         }
     }
 
