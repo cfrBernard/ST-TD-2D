@@ -9,6 +9,8 @@ public class Projectile : MonoBehaviour
     private float maxDistance;
     private float distanceTraveled;
 
+    public float damage = 1f;
+
     public void Initialize(Vector2 direction, PlayerConfig config)
     {
         moveDirection = direction.normalized;  
@@ -35,6 +37,13 @@ public class Projectile : MonoBehaviour
         if (other.CompareTag("Wall") || other.CompareTag("Enemy"))
         {
             ResetProjectile();  
+        }
+
+        Damageable damageable = other.GetComponent<Damageable>();
+        if (damageable != null)
+        {
+            damageable.TakeDamage(damage, transform.position);
+            gameObject.SetActive(false);
         }
     }
 
