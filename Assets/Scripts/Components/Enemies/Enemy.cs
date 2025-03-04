@@ -1,23 +1,28 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    public float moveSpeed = 3f;
     public float detectionRange = 10f;
-    protected Transform playerTransform;
+    protected Transform target;
     protected Animator animator;
     protected Rigidbody2D rb;
+    NavMeshAgent agent;
 
     protected virtual void Start()
     {
-        playerTransform = FindAnyObjectByType<PlayerController>().transform; 
+        target = FindAnyObjectByType<PlayerController>().transform; 
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+
+        agent = GetComponent<NavMeshAgent>();
+        agent.updateRotation = false; 
+        agent.updateUpAxis = false;
     }
 
     protected virtual void FixedUpdate()
     {
-        float distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
+        float distanceToPlayer = Vector2.Distance(transform.position, target.position);
 
         if (distanceToPlayer <= detectionRange)
         {
@@ -31,7 +36,9 @@ public class Enemy : MonoBehaviour
 
     protected virtual void MoveTowardsPlayer()
     {
-        Vector2 direction = (playerTransform.position - transform.position).normalized;
+        agent.SetDestination(target.position); 
+
+        Vector2 direction = (target.position - transform.position).normalized;
 
         animator.SetFloat("Vertical", direction.y);
         animator.SetFloat("Horizontal", direction.x);
@@ -41,7 +48,6 @@ public class Enemy : MonoBehaviour
             transform.localScale = new Vector3(-1, 1, 1);
         else if (direction.x > 0)
             transform.localScale = new Vector3(1, 1, 1);
-
-        rb.MovePosition(rb.position + direction * moveSpeed * Time.deltaTime);
     }
+
 }
