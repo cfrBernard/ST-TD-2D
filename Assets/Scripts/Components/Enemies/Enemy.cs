@@ -4,10 +4,13 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
     public float detectionRange = 10f;
+    public GameObject corpsePrefab; 
+
     protected Transform target;
     protected Animator animator;
     protected Rigidbody2D rb;
-    NavMeshAgent agent;
+    protected NavMeshAgent agent;
+    protected bool isDead = false;
 
     protected virtual void Start()
     {
@@ -20,8 +23,20 @@ public class Enemy : MonoBehaviour
         agent.updateUpAxis = false;
     }
 
+    private void OnEnable()
+    {
+        EventManager.OnEnemyDeath += HandleDeath;  
+    }
+
+    private void OnDisable()
+    {
+        EventManager.OnEnemyDeath -= HandleDeath;  
+    }
+
     protected virtual void FixedUpdate()
     {
+        if (isDead) return;
+
         float distanceToPlayer = Vector2.Distance(transform.position, target.position);
 
         if (distanceToPlayer <= detectionRange)
@@ -48,6 +63,22 @@ public class Enemy : MonoBehaviour
             transform.localScale = new Vector3(-1, 1, 1);
         else if (direction.x > 0)
             transform.localScale = new Vector3(1, 1, 1);
+    }
+
+    protected virtual void HandleDeath()
+    {
+        if (isDead) return;
+        
+        isDead = true;
+
+        agent.enabled = false;
+        animator.SetTrigger("Death");
+
+        if (corpsePrefab)
+        {
+            Instantiate(corpsePrefab, transform.position, Quaternion.identity);
+        }
+        Destroy(gameObject, 2f);
     }
 
 }
