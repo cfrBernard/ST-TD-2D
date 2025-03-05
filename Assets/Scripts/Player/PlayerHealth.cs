@@ -92,6 +92,7 @@ public class PlayerHealth : MonoBehaviour
     private void Die()
     {
         Debug.Log("Le joueur est mort !");
+        EventManager.TriggerPlayerDeath();
     }
 
     public float GetCurrentHealth()

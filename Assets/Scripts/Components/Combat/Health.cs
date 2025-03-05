@@ -6,8 +6,6 @@ public class Health : MonoBehaviour
     public float maxHP = 10f;
     private float currentHP;
 
-    public event Action OnDeath; 
-
     private void Awake()
     {
         currentHP = maxHP;
@@ -18,8 +16,7 @@ public class Health : MonoBehaviour
         currentHP -= amount;
         if (currentHP <= 0)
         {
-            OnDeath?.Invoke(); 
-            Destroy(gameObject);
+            EventManager.TriggerEnemyDeath();
         }
     }
 
