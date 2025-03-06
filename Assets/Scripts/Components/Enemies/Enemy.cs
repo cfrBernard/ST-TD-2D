@@ -3,9 +3,11 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    public float detectionRange = 10f;
+    public GameObject phase2Prefab;
     public GameObject corpsePrefab; 
-
+    public GameObject deathEffectPrefab;
+    public float detectionRange = 10f;
+    
     protected Transform target;
     protected Animator animator;
     protected Rigidbody2D rb;
@@ -65,20 +67,37 @@ public class Enemy : MonoBehaviour
             transform.localScale = new Vector3(1, 1, 1);
     }
 
-    protected virtual void HandleDeath()
+    protected virtual void HandleDeath(Enemy enemy)
     {
-        if (isDead) return;
+        if (enemy != this) return;
         
+        if (isDead) return;
         isDead = true;
 
         agent.enabled = false;
         animator.SetTrigger("Death");
 
-        if (corpsePrefab)
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null) rb.simulated = false; 
+        Collider2D collider = GetComponent<Collider2D>();
+        if (collider != null) collider.enabled = false;
+
+        if (corpsePrefab) // ?????
         {
             Instantiate(corpsePrefab, transform.position, Quaternion.identity);
         }
-        Destroy(gameObject, 2f);
+
+        if (deathEffectPrefab)
+        {
+            Instantiate(deathEffectPrefab, transform.position, Quaternion.identity);
+        }
+
+        if (phase2Prefab)
+        {
+            Instantiate(phase2Prefab, transform.position, Quaternion.identity);
+        }
+
+        Destroy(gameObject, 3f);
     }
 
 }

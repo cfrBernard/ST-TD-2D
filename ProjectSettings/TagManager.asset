@@ -19,8 +19,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - FlyingEnemy
+  - Enemy
   - Player
   - 
   - 
@@ -52,6 +52,12 @@ TagManager:
     locked: 0
   - name: Background
     uniqueID: 141759727
+    locked: 0
+  - name: FlyingEnemy
+    uniqueID: 3227638671
+    locked: 0
+  - name: Enemy
+    uniqueID: 800751773
     locked: 0
   - name: Player
     uniqueID: 4027300521

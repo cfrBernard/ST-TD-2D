@@ -15,7 +15,7 @@ public class Destructible : MonoBehaviour
         EventManager.OnEnemyDeath -= HandleDeath;  
     }
 
-    private void HandleDeath()
+    private void HandleDeath(Enemy enemy)
     {
         DestroyObstacle();  
     }
