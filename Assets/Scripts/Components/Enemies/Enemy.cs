@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
 
 public class Enemy : MonoBehaviour
 {
@@ -16,13 +17,29 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Start()
     {
-        target = FindAnyObjectByType<PlayerController>().transform; 
+        target = FindAnyObjectByType<PlayerController>()?.transform; 
+        if (target == null)
+        {
+            Debug.LogWarning($"{gameObject.name} n'a pas trouvé de PlayerController au Start !");
+            StartCoroutine(FindPlayerLater()); 
+        }
+    
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-
+    
         agent = GetComponent<NavMeshAgent>();
-        agent.updateRotation = false; 
+        agent.updateRotation = false;
         agent.updateUpAxis = false;
+    }
+
+    private IEnumerator FindPlayerLater()
+    {
+        yield return new WaitForSeconds(5f); 
+        target = FindAnyObjectByType<PlayerController>()?.transform;
+        if (target != null)
+        {
+            Debug.Log($"{gameObject.name} a trouvé le Player plus tard !");
+        }
     }
 
     private void OnEnable()
@@ -37,7 +54,7 @@ public class Enemy : MonoBehaviour
 
     protected virtual void FixedUpdate()
     {
-        if (isDead) return;
+        if (isDead || target == null) return; 
 
         float distanceToPlayer = Vector2.Distance(transform.position, target.position);
 
